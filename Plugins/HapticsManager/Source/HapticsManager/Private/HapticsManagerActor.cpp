@@ -6,8 +6,10 @@
 #include "SDK/hapticsManager.hpp"
 #include "HapticStructures.h"
 #include "HideWindowsPlatformTypes.h"
-#include "BhapticsUtilities.h"
+//#include "BhapticsUtilities.h"
 //#include "Utility/Include/HapticUtility.h"
+//#include "Utility/Includes/UtilityLib.h"
+#include "UtilityLib.h"
 
 bhaptics::HapticPlayer *bhaptics::HapticPlayer::hapticManager = 0;
 
@@ -51,36 +53,39 @@ void AHapticsManagerActor::OnConstruction(const FTransform & Transform)
 void AHapticsManagerActor::BeginPlay()
 {
 	Super::BeginPlay();
+	HapticUtilities::HapticUtils *UtilsPointer;
+	UtilsPointer = new HapticUtilities::HapticUtils();
 
-	BhapticsUtilities::Initialise();
-	FString temp = BhapticsUtilities::GetExecutablePath();
+	//BhapticsUtilities::Initialise();
+	//FString temp = BhapticsUtilities::GetExecutablePath();
 	//FString temp = FString(getExePath());
 
-	UE_LOG(LogTemp, Log, TEXT("%s"),*temp);
-	UE_LOG(LogTemp, Log, TEXT("Passed the executable path"));
+	//FString temp = UtilsPointer->getExePath();
 
-	
+	//UE_LOG(LogTemp, Log, TEXT("%s"),*temp);
+	//UE_LOG(LogTemp, Log, TEXT("Passed the executable path"));
+
+	////if (!BhapticsUtilities::IsPlayerRunning())
 	//if(!isPlayerRunning())
-	if (!BhapticsUtilities::IsPlayerRunning())
-	{
-		UE_LOG(LogTemp, Log, TEXT("Player is not running"));
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Player is not running"));
 
-		//if (isPlayerInstalled())
-		if (BhapticsUtilities::IsPlayerInstalled())
-		{
-			UE_LOG(LogTemp, Log, TEXT("Player is installed - launching"));
-			BhapticsUtilities::LaunchPlayer();
-			//launchPlayer();
-		}
-		else
-		{
-			UE_LOG(LogTemp, Log, TEXT("Player is not Installed"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Log, TEXT("Player is running"));
-	}
+	//	//if (BhapticsUtilities::IsPlayerInstalled())
+	//	if (isPlayerInstalled())
+	//	{
+	//		UE_LOG(LogTemp, Log, TEXT("Player is installed - launching"));
+	//		//BhapticsUtilities::LaunchPlayer();
+	//		launchPlayer();
+	//	}
+	//	else
+	//	{
+	//		UE_LOG(LogTemp, Log, TEXT("Player is not Installed"));
+	//	}
+	//}
+	//else
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Player is running"));
+	//}
 
 	//BhapticsUtilities::Free();
 

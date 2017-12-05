@@ -11,7 +11,8 @@ public class HapticsManager : ModuleRules
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         PublicIncludePaths.AddRange(
 			new string[] {
-                "HapticsManager/Public"
+                "HapticsManager/Public",
+                "Utility/Include"
 				// ... add public include paths required here ...
 			}
 			);
@@ -51,11 +52,28 @@ public class HapticsManager : ModuleRules
 			);
 
         //string BinaryLocation = Directory.GetParent(ModuleDirectory).ToString();
-        //PublicIncludePaths.Add(BinaryLocation + @"DLLs\Include");
-        //PublicIncludePaths.Add(BinaryLocation + @"Utility\Include");
-        
-        //PublicAdditionalLibraries.Add(BinaryLocation + @"\Utility\Libraries\bHapticUtility.lib");//D:\bHapticsManager\bHapticsRelease - Gitlab\Plugins\HapticsManager\Binaries\Win64\bHapticUtility.lib
-        
+        ////PublicIncludePaths.Add(BinaryLocation + @"DLLs\Include");
+        ////PublicIncludePaths.Add(BinaryLocation + @"Utility\Include");
+
+        //PublicAdditionalLibraries.Add(BinaryLocation + @"\Utility\Libraries\HapticUtility.lib");//D:\bHapticsManager\bHapticsRelease - Gitlab\Plugins\HapticsManager\Binaries\Win64\bHapticUtility.lib
+        bool isLibrarySupported = false;
+        string ThirdPartyPath = Path.GetFullPath(Path.Combine(ModuleDirectory,"../../ThirdParty/"));
+
+        if ((Target.Platform == UnrealTargetPlatform.Win64) )
+        {
+            isLibrarySupported = true;
+            
+            string LibrariesPath = Path.Combine(ThirdPartyPath, "Utility", "Libraries");
+
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "HapticUtility.x64.lib"));
+        }
+
+        if (isLibrarySupported)
+        {
+            // Include path
+            PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Utility", "Includes"));
+        }
+
         DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
